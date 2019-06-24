@@ -16,6 +16,7 @@ def from_files_to_array():
     data = []
     labels = []
     files_path = os.listdir(TRAIN_PATH)
+    files_path = files_path[0:12]
     for dog_type in files_path:
         dogs_images = os.listdir(TRAIN_PATH+"/"+dog_type)
         for dog in dogs_images:
@@ -111,19 +112,21 @@ def make_model():
     model.add(Conv2D(filters=32,kernel_size=2,padding="same",activation="relu"))
     model.add(MaxPooling2D(pool_size=2))
     model.add(Conv2D(filters=64,kernel_size=2,padding="same",activation="relu"))
+    model.add(Conv2D(filters=32, kernel_size=2, padding="same",
+                     activation="relu"))
     model.add(MaxPooling2D(pool_size=2))
     model.add(Dropout(0.2))
     model.add(Flatten())
     model.add(Dense(500,activation="relu"))
     model.add(Dropout(0.2))
-    model.add(Dense(133,activation="softmax"))
+    model.add(Dense(12, activation="softmax"))
     model.summary()
     model.compile(loss='categorical_crossentropy', optimizer='adam',
                       metrics=['accuracy'])
     return model
 
 def fit_model(model, x_train, y_train):
-    model.fit(x_train,y_train,batch_size=50,epochs=10,verbose=1)
+    model.fit(x_train,y_train,batch_size=10,epochs=50,verbose=1)
 
 def score(model, x_test, y_test):
     score = model.evaluate(x_test, y_test, verbose=1)
@@ -176,6 +179,7 @@ def predict_animal(file, model):
     animal=get_animal_name(label_index)
     print(animal)
     print("The predicted Animal is a "+animal+" with accuracy =    "+str(acc))
+    save_model(model)
 
 def first_time_run(image):
     animals, labels = create_animal_arrays()
@@ -187,13 +191,24 @@ def first_time_run(image):
     predict_animal(image, model)
 
 def second_time_run(image):
-    model = make_model()
-    model.load_weights("model.h5")
-    predict_animal(image, model)
+    animals, labels = load_animal_array()
+    animals, labels = shuffle_data(animals, labels)
+    json_file = open('model.json', 'r')
+    loaded_model_json = json_file.read()
+    json_file.close()
+    loaded_model = model_from_json(loaded_model_json)
+    # load weights into new model
+    loaded_model.load_weights("model.h5")
+    print("Loaded model from disk")
+
+    # evaluate loaded model on test data
+    loaded_model.compile(loss='categorical_crossentropy', optimizer='adam',
+                      metrics=['accuracy'])
+    predict_animal(image, loaded_model)
 
 if __name__ == '__main__':
-    first_time_run("Golden_retriever_05181.jpg")
-    # second_time_run("cat.jpg")
+    # first_time_run("Alaskan-Malamute.jpg")
+    second_time_run("akita.jpg")
 
 
 
