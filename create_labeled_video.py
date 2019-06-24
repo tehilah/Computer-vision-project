@@ -28,7 +28,7 @@ def convert_to_frames():
 	print("Done!")
 	return count
 
-convert_to_frames()
+# convert_to_frames()
 def label_frame(frame, i):
 	img = Image.open(frame)
 	draw = ImageDraw.Draw(img)
@@ -36,9 +36,11 @@ def label_frame(frame, i):
 	font = ImageFont.truetype("TIMESS.ttf", 100)
 	# draw.text((x, y),"Sample Text",(r,g,b))
 	draw.text((150, 150), "Labrador", (255, 255, 255), font=font)
+	if not cv2.os.path.exists("labels"):
+		cv2.os.makedirs("labels")
 	img.save('labels/labeled_frame'+str(i)+'.jpg')
 
-
+label_frame("frame0.jpg", 0)
 def predict_frames(num_frames):
 	for i in range(num_frames):
 		label_frame("frame"+str(i)+'.jpg', i)
