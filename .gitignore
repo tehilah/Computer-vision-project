@@ -1,0 +1,11 @@
+*.jpg
+*.mp4
+venv
+.idea/workspace.xml
+*.jpg
+*.png
+*.jpeg
+animals10.zip
+*.pyc
+env/
+dogImages.zip
