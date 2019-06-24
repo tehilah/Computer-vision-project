@@ -9,3 +9,4 @@ animals10.zip
 *.pyc
 env/
 dogImages.zip
+*.npy
