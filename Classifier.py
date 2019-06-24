@@ -192,7 +192,7 @@ def second_time_run(image):
     predict_animal(image, model)
 
 if __name__ == '__main__':
-    first_time_run("miko.jpg")
+    first_time_run("Golden_retriever_05181.jpg")
     # second_time_run("cat.jpg")
 
 
