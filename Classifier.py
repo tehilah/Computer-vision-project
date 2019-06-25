@@ -9,14 +9,14 @@ from keras.datasets import cifar10
 import os
 import cv2
 
-TRAIN_PATH = "train"
+TRAIN_PATH = "Images"
 
 def from_files_to_array():
     counter = 0
     data = []
     labels = []
     files_path = os.listdir(TRAIN_PATH)
-    files_path = files_path[0:12]
+    files_path = files_path
     for dog_type in files_path:
         dogs_images = os.listdir(TRAIN_PATH+"/"+dog_type)
         for dog in dogs_images:
@@ -112,6 +112,7 @@ def make_model():
     model.add(Conv2D(filters=32,kernel_size=2,padding="same",activation="relu"))
     model.add(MaxPooling2D(pool_size=2))
     model.add(Conv2D(filters=64,kernel_size=2,padding="same",activation="relu"))
+    model.add(MaxPooling2D(pool_size=2))
     model.add(Conv2D(filters=32, kernel_size=2, padding="same",
                      activation="relu"))
     model.add(MaxPooling2D(pool_size=2))
@@ -207,8 +208,8 @@ def second_time_run(image):
     predict_animal(image, loaded_model)
 
 if __name__ == '__main__':
-    # first_time_run("Alaskan-Malamute.jpg")
-    second_time_run("akita.jpg")
+    # first_time_run("Doberman-Pinscher-On-White-03.jpg")
+    second_time_run("Doberman-Pinscher-On-White-03.jpg")
 
 
 
