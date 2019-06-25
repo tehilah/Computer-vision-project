@@ -189,7 +189,12 @@ def first_time_run(image):
     model =make_model()
     fit_model(model, x_train, y_train)
     score(model, x_test, y_test)
-    predict_animal(image, model)
+    files_path = os.listdir(image)
+    for animal in files_path:
+        if not "ini" in animal:
+            print("animal is: ",animal)
+            predict_animal(image + "/" + animal, model)
+    # predict_animal(image, model)
 
 def second_time_run(image):
     animals, labels = load_animal_array()
@@ -212,7 +217,7 @@ def second_time_run(image):
             predict_animal(image + "/" + animal, loaded_model)
 
 if __name__ == '__main__':
-    # first_time_run("WhatsApp.jpg")
+    # first_time_run("test")
     second_time_run("test")
 
 
