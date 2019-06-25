@@ -205,11 +205,15 @@ def second_time_run(image):
     # evaluate loaded model on test data
     loaded_model.compile(loss='categorical_crossentropy', optimizer='adam',
                       metrics=['accuracy'])
-    predict_animal(image, loaded_model)
+    files_path = os.listdir(image)
+    for animal in files_path:
+        if not "ini" in animal:
+            print("animal is: ",animal)
+            predict_animal(image + "/" + animal, loaded_model)
 
 if __name__ == '__main__':
-    # first_time_run("Doberman-Pinscher-On-White-03.jpg")
-    second_time_run("Doberman-Pinscher-On-White-03.jpg")
+    # first_time_run("WhatsApp.jpg")
+    second_time_run("test")
 
 
 
