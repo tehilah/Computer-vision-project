@@ -217,8 +217,8 @@ def second_time_run(image):
             predict_animal(image + "/" + animal, loaded_model)
 
 if __name__ == '__main__':
-    # first_time_run("test")
-    second_time_run("test")
+    first_time_run("test")
+    # second_time_run("test")
 
 
 
