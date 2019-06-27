@@ -127,7 +127,7 @@ def make_model():
     return model
 
 def fit_model(model, x_train, y_train):
-    model.fit(x_train,y_train,batch_size=10,epochs=50,verbose=1)
+    model.fit(x_train,y_train,batch_size=10,epochs=100,verbose=1)
 
 def score(model, x_test, y_test):
     score = model.evaluate(x_test, y_test, verbose=1)
@@ -172,8 +172,10 @@ def predict_animal(file, model):
     a = list()
     a.append(ar)
     a=np.array(a)
+    print("**********")
     score=model.predict(a,verbose=1)
     print(score)
+    print("**********")
     label_index=np.argmax(score)
     print(label_index)
     acc=np.max(score)
